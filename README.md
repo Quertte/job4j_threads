@@ -1,3 +1,16 @@
 [![Java CI with Maven](https://github.com/Quertte/job4j_threads/actions/workflows/maven.yml/badge.svg)](https://github.com/Quertte/job4j_threads/actions/workflows/maven.yml)
 
-# job4j_threads
+
+# О проекте job4j_threads
+
+В этом проекте собраны решенные мною задачи при изучении многопоточности в Java.
+
+## Multithreading.
+
+- Threads
+- Общие ресурсы
+- Синхронизация ресурсов
+- Wait, Notify, NotifyAll
+- Non Blocking Algoritm
+- Пулы
+- Проект - Pooh JMC
