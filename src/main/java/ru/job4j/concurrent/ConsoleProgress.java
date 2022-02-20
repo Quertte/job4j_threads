@@ -20,8 +20,7 @@ public class ConsoleProgress implements Runnable {
                 Thread.sleep(500);
                 System.out.print("\r load: " + process[i++]);
             } catch (InterruptedException e) {
-                System.out.println("\nПоток хотят прервать во время сна, завершаем работу");
-                return;
+                Thread.currentThread().interrupt();
             }
         }
     }
