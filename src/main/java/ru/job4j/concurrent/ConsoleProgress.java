@@ -13,7 +13,7 @@ public class ConsoleProgress implements Runnable {
         String[] process = {"\\", "|", "/"};
         int i = 0;
         while (!Thread.currentThread().isInterrupted()) {
-            if (i == 3) {
+            if (i == process.length) {
                 i = 0;
             }
             try {
