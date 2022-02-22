@@ -25,14 +25,15 @@ public class Wget implements Runnable {
             int downloadData = 0;
             while ((bytesRead = in.read(buffer, 0, speed)) != -1) {
                 downloadData += bytesRead;
-                if (downloadData == speed) {
+                if (downloadData >= speed) {
                     long finishTime = System.currentTimeMillis() - startTime;
                     System.out.println(finishTime);
                     if (finishTime < 1000) {
                         Thread.sleep(1000 - finishTime);
-                        downloadData = 0;
                     }
                 }
+                downloadData = 0;
+                startTime = System.currentTimeMillis();
                 fos.write(buffer, 0, bytesRead);
             }
         } catch (Exception e) {
