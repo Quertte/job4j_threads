@@ -10,11 +10,11 @@ public final class ParseFileGetContent implements GetContent {
         this.file = file;
     }
 
-    public String getContent(Predicate<Character> predicate) {
+    public synchronized String getContent(Predicate<Character> predicate) {
         StringBuilder output = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             int data;
-            while ((data = reader.read()) > 0) {
+            while ((data = reader.read()) != -1) {
                 if (predicate.test((char) data)) {
                     output.append((char) data);
                 }
@@ -25,11 +25,11 @@ public final class ParseFileGetContent implements GetContent {
         return output.toString();
     }
 
-    public String getContent() {
+    public synchronized String getContent() {
         return getContent(a -> true);
     }
 
-    public String getContentWithoutUnicode() {
+    public synchronized String getContentWithoutUnicode() {
         return getContent(a -> a < 0x80);
     }
 }

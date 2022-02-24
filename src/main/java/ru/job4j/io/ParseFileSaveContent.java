@@ -9,7 +9,7 @@ public final class ParseFileSaveContent implements SaveContent {
         this.file = file;
     }
 
-    public void saveContent(String content) {
+    public synchronized void saveContent(String content) {
         try (OutputStream o = new FileOutputStream(file);
              BufferedOutputStream out = new BufferedOutputStream(o)) {
             for (int i = 0; i < content.length(); i += 1) {
