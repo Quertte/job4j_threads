@@ -24,14 +24,12 @@ public class UserStorage implements Storage, Transfer {
     @Override
     public synchronized boolean transfer(int fromId, int toId, int amount) {
         boolean rsl = false;
-        if (store.containsKey(fromId) && store.containsKey(toId)) {
-            User user = store.get(fromId);
-            User user1 = store.get(toId);
-            if (user != null && user1 != null && user.getAmount() >= amount) {
-                user.setAmount(user.getAmount() - amount);
-                user1.setAmount(user1.getAmount() + amount);
-                rsl = true;
-            }
+        User user = store.get(fromId);
+        User user1 = store.get(toId);
+        if (user != null && user1 != null && user.getAmount() >= amount) {
+            user.setAmount(user.getAmount() - amount);
+            user1.setAmount(user1.getAmount() + amount);
+            rsl = true;
         }
         return rsl;
     }
