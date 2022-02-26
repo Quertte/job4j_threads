@@ -21,11 +21,7 @@ public class SimpleBlockingQueueTest {
                 }
         );
         AtomicReference<Integer> value = new AtomicReference<>();
-        Thread consumer = new Thread(
-                () -> {
-                    value.set(queue.poll());
-                }
-        );
+        Thread consumer = new Thread(() -> value.set(queue.poll()));
         producer.start();
         consumer.start();
         producer.join();
@@ -33,7 +29,5 @@ public class SimpleBlockingQueueTest {
         assertThat(queue.size(), is(3));
         assertThat(value.get(), is(1));
     }
-
-
 }
 
