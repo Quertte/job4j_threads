@@ -16,12 +16,22 @@ public class SimpleBlockingQueueTest {
         Thread producer = new Thread(
                 () -> {
                     for (int i = 0; i < queue.getLimit(); i++) {
-                        queue.offer(count.getAndIncrement());
+                        try {
+                            queue.offer(count.getAndIncrement());
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
                     }
                 }
         );
         AtomicReference<Integer> value = new AtomicReference<>();
-        Thread consumer = new Thread(() -> value.set(queue.poll()));
+        Thread consumer = new Thread(() -> {
+            try {
+                value.set(queue.poll());
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
         producer.start();
         consumer.start();
         producer.join();
