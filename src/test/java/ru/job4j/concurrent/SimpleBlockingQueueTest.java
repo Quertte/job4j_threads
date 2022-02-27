@@ -2,6 +2,8 @@ package ru.job4j.concurrent;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -47,6 +49,39 @@ public class SimpleBlockingQueueTest {
         consumer.join();
         assertThat(queue.size(), is(3));
         assertThat(value.get(), is(1));
+    }
+
+    @Test
+    public void whenFetchAllThenGetIt() throws InterruptedException {
+        final CopyOnWriteArrayList<Integer> buffer = new CopyOnWriteArrayList<>();
+        final SimpleBlockingQueue<Integer> que = new SimpleBlockingQueue<>(5);
+        Thread producer = new Thread(
+                () -> {
+                    for (int i = 0; i < 5; i++) {
+                        try {
+                            que.offer(i);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
+        producer.start();
+        Thread consumer = new Thread(
+                () -> {
+                    while (!que.isEmpty() || !Thread.currentThread().isInterrupted()) {
+                        try {
+                            buffer.add(que.poll());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                }
+        );
+        consumer.start();
+        producer.join();
+        assertThat(buffer, is(Arrays.asList(0, 1, 2, 3, 4)));
     }
 }
 
