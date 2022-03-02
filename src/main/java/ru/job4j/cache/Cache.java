@@ -28,7 +28,7 @@ public class Cache {
     }
 
     public Map<Integer, Base> getMemory() {
-        return memory;
+        return new ConcurrentHashMap<>(memory);
     }
 
     public int size() {
