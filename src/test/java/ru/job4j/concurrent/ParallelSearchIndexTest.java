@@ -2,29 +2,25 @@ package ru.job4j.concurrent;
 
 import org.junit.Test;
 
-import java.util.concurrent.ForkJoinPool;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class ParallelSearchIndexTest {
     @Test
     public void whenSearchIndex() {
-        ForkJoinPool pool = new ForkJoinPool();
         Integer[] array = getArray(50);
+        Integer element = 10;
         int expect = 10;
-        int result = pool.invoke(new ParallelSearchIndex<>(
-                array, 0, array.length - 1, 10));
+        int result = ParallelSearchIndex.returnIndex(array, element);
         assertThat(result, is(expect));
     }
 
     @Test
     public void whenDoNotSearchIndex() {
-        ForkJoinPool pool = new ForkJoinPool();
         Integer[] array = getArray(50);
+        Integer element = 100;
         int expect = -1;
-        int result = pool.invoke(new ParallelSearchIndex<>(
-                array, 0, array.length - 1, 100));
+        int result = ParallelSearchIndex.returnIndex(array, element);
         assertThat(result, is(expect));
     }
 
