@@ -50,20 +50,4 @@ public class Req {
     public String getParam() {
         return param;
     }
-
-    public static void main(String[] args) {
-        String ls = System.lineSeparator();
-        String content = "GET /topic/weather/client HTTP/1.1" + ls
-                + "Host: localhost:9000" + ls
-                + "User-Agent: curl/7.77.0" + ls
-                + "Accept: */*" + ls + ls + ls;
-        String[] contentArray = content.split("\n");
-        String[] rsl = contentArray[0].split("/");
-
-//        for (int i = 0; i < rsl.length; i++) {
-//            System.out.println(rsl[i]);
-//        }
-        System.out.println(rsl.length);
-      //  System.out.println(rsl[3].substring(0, rsl[3].indexOf(" ")));
-    }
 }
