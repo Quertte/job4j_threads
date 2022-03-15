@@ -14,7 +14,7 @@ public class Req {
     }
 
     public static Req of(String content) {
-        String[] array = content.split("\n");
+        String[] array = content.split(System.lineSeparator());
         String[] rsl = array[0].split("/");
         String request;
         String pooh;
