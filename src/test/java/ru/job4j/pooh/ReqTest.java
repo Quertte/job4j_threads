@@ -70,5 +70,4 @@ public class ReqTest {
         assertThat(req.getSourceName(), is("weather"));
         assertThat(req.getParam(), is("client407"));
     }
-
 }

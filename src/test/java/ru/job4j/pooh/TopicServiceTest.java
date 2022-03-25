@@ -1,4 +1,3 @@
-/*
 package ru.job4j.pooh;
 
 import org.junit.Test;
@@ -28,4 +27,4 @@ public class TopicServiceTest {
         assertThat(result1.text(), is("temperature=18"));
         assertThat(result2.text(), is(""));
     }
-}*/
+}

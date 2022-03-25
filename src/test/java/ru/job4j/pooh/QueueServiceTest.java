@@ -10,9 +10,11 @@ public class QueueServiceTest {
     public void whenPostThenGetQueue() {
         QueueService service = new QueueService();
         String paramForPostMethod = "temperature=18";
+        /* Добавляем данные в очередь weather. Режим queue */
         service.process(
                 new Req("POST", "queue", "weather", paramForPostMethod)
         );
+        /* Забираем данные из очереди weather. Режим queue */
         Resp result = service.process(
                 new Req("GET", "queue", "weather", null)
         );
