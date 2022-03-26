@@ -14,9 +14,11 @@ public class QueueService implements Service {
         if ("POST".equals(req.httpRequestType())) {
             queue.putIfAbsent(req.getSourceName(), new ConcurrentLinkedQueue<>());
             queue.get(req.getSourceName()).add(req.getParam());
-            resp = new Resp(req.getParam(), "200 OK\r\n");
+            resp = new Resp(req.getParam(), "200 OK");
         } else if ("GET".equals(req.httpRequestType())) {
-            resp = new Resp(queue.get(req.getSourceName()).poll(), "200 OK\r\n");
+            if (queue.get(req.getSourceName()) != null) {
+                resp = new Resp(queue.get(req.getSourceName()).poll(), "200 OK");
+            }
         }
         return resp;
     }
