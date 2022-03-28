@@ -13,7 +13,8 @@ public class TopicService implements Service {
         Resp resp = new Resp("", "204 No Content");
         if ("GET".equals(req.httpRequestType())) {
             topic.putIfAbsent(req.getSourceName(), new ConcurrentHashMap<>());
-            ConcurrentLinkedQueue<String> queue = topic.get(req.getSourceName()).get(req.getParam());
+            ConcurrentLinkedQueue<String> queue = topic.get(
+                    req.getSourceName()).get(req.getParam());
             if (queue == null || queue.size() == 0) {
                 topic.get(req.getSourceName()).putIfAbsent(
                         req.getParam(), new ConcurrentLinkedQueue<>());
