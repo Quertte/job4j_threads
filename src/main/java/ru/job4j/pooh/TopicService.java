@@ -10,11 +10,11 @@ public class TopicService implements Service {
 
     @Override
     public Resp process(Req req) {
-        Resp resp = null;
+        Resp resp = new Resp("", "204 No Content");
         if ("GET".equals(req.httpRequestType())) {
             topic.putIfAbsent(req.getSourceName(), new ConcurrentHashMap<>());
-            if (topic.get(req.getSourceName()).get(req.getParam()) == null) {
-                resp = new Resp("", "204 No Content");
+            ConcurrentLinkedQueue<String> queue = topic.get(req.getSourceName()).get(req.getParam());
+            if (queue == null || queue.size() == 0) {
                 topic.get(req.getSourceName()).putIfAbsent(
                         req.getParam(), new ConcurrentLinkedQueue<>());
             } else {
@@ -24,9 +24,7 @@ public class TopicService implements Service {
         } else if ("POST".equals(req.httpRequestType())) {
             ConcurrentHashMap<String, ConcurrentLinkedQueue<String>> val = topic.get(
                     req.getSourceName());
-            if (val == null) {
-                resp = new Resp("", "204 No Content");
-            } else {
+            if (val != null) {
                 for (ConcurrentLinkedQueue<String> clq : val.values()) {
                     clq.add(req.getParam());
                 }
