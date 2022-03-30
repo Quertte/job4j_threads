@@ -16,7 +16,7 @@ public class TopicService implements Service {
             ConcurrentLinkedQueue<String> queue = topic.get(
                     req.getSourceName()).getOrDefault(
                     req.getParam(), new ConcurrentLinkedQueue<>());
-            if (queue.size() == 0) {
+            if (queue.isEmpty()) {
                 topic.get(req.getSourceName()).putIfAbsent(
                         req.getParam(), queue);
             } else {
