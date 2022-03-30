@@ -14,13 +14,13 @@ public class TopicService implements Service {
         if ("GET".equals(req.httpRequestType())) {
             topic.putIfAbsent(req.getSourceName(), new ConcurrentHashMap<>());
             ConcurrentLinkedQueue<String> queue = topic.get(
-                    req.getSourceName()).get(req.getParam());
-            if (queue == null || queue.size() == 0) {
+                    req.getSourceName()).getOrDefault(
+                    req.getParam(), new ConcurrentLinkedQueue<>());
+            if (queue.size() == 0) {
                 topic.get(req.getSourceName()).putIfAbsent(
-                        req.getParam(), new ConcurrentLinkedQueue<>());
+                        req.getParam(), queue);
             } else {
-                resp = new Resp(topic.get(req.getSourceName()).get(
-                        req.getParam()).poll(), "200 OK");
+                resp = new Resp(queue.poll(), "200 OK");
             }
         } else if ("POST".equals(req.httpRequestType())) {
             ConcurrentHashMap<String, ConcurrentLinkedQueue<String>> val = topic.get(
