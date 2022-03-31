@@ -20,7 +20,9 @@ public class TopicService implements Service {
                 topic.get(req.getSourceName()).putIfAbsent(
                         req.getParam(), queue);
             } else {
-                resp = new Resp(queue.poll(), "200 OK");
+                String text = queue.poll();
+                resp = text != null ? new Resp(text, "200 OK")
+                        : resp;
             }
         } else if ("POST".equals(req.httpRequestType())) {
             ConcurrentHashMap<String, ConcurrentLinkedQueue<String>> val = topic.get(
