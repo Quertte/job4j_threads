@@ -14,3 +14,5 @@
 - Non Blocking Algoritm
 - Пулы
 - Проект - Pooh JMC
+
+В курсе производилась работа с ветками git.
